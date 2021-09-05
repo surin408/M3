@@ -1,0 +1,35 @@
+version: '3'
+services: 
+    dbs:
+        image: mongo:5.0.2
+        hostname: mongodb
+        ports:
+            - 27017:27017
+        networks:
+            - default
+        env_file: .env
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=${MONGO_INITDB_ROOT_USERNAME}
+            - MONGO_INITDB_ROOT_PASSWORD=password
+        volumes:
+            - db:/data/db
+            - db_config:/data/configdb
+    dbsadmin:
+        image: mongo-express:0.54
+        ports:
+            - 8081:8081
+        networks:
+            - default
+        env_file: .env
+        environment:
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=admin
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=${ME_CONFIG_MONGODB_ADMINPASSWORD}
+            - ME_CONFIG_MONGODB_SERVER=dbs
+        depends_on:
+            - dbs
+volumes:
+    db:
+    db_config:
+networks:
+    default:
+#        driver: bridge

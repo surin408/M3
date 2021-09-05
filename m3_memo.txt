@@ -1,0 +1,13 @@
+## M3
+## 2021/09/04
+
+
+# 2021/09/04 :-
+# start & run :-
+docker run -dit \
+--name dev_ea \
+-p 3000:3000 -p 4200:4200 \
+dev_ea sh
+# interactive :-
+docker exec -it --user node dev_ea sh
+
